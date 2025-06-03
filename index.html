@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Asistente de Mantenimiento</title>
+  <title>Chatbot de Mantenimiento</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #e9f0f4;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f4f8;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -16,12 +16,11 @@
     }
 
     .chat-container {
-      width: 100%;
-      max-width: 450px;
-      height: 90vh;
-      background: #ffffff;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      border-radius: 16px;
+      background-color: #ffffff;
+      width: 420px;
+      max-height: 700px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -29,15 +28,15 @@
 
     .chat-box {
       flex: 1;
-      padding: 20px;
+      padding: 15px;
       overflow-y: auto;
     }
 
     .message {
-      padding: 12px 16px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      padding: 10px 14px;
       border-radius: 12px;
-      max-width: 80%;
+      max-width: 85%;
       line-height: 1.4;
     }
 
@@ -47,32 +46,30 @@
     }
 
     .bot-message {
-      background-color: #eaeaea;
+      background-color: #f0f0f0;
       align-self: flex-start;
     }
 
     .input-box {
       display: flex;
       border-top: 1px solid #ccc;
-      background: #f9f9f9;
     }
 
     .input-box input {
       flex: 1;
-      padding: 14px;
+      padding: 12px;
       border: none;
-      font-size: 16px;
-      border-radius: 0;
       outline: none;
+      font-size: 16px;
     }
 
     .input-box button {
       background-color: #4CAF50;
       color: white;
-      padding: 0 20px;
       border: none;
-      font-size: 16px;
+      padding: 12px 16px;
       cursor: pointer;
+      font-size: 16px;
     }
 
     .input-box button:hover {
@@ -82,17 +79,18 @@
     .quick-buttons {
       display: flex;
       flex-wrap: wrap;
+      gap: 5px;
       padding: 10px;
-      gap: 8px;
-      background-color: #f4f4f4;
-      justify-content: center;
+      border-top: 1px solid #ccc;
+      background-color: #f9f9f9;
     }
 
     .quick-buttons button {
-      background-color: #eee;
-      border: none;
-      padding: 8px 12px;
+      flex: 1;
       font-size: 14px;
+      padding: 6px 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
       border-radius: 8px;
       cursor: pointer;
     }
@@ -106,16 +104,16 @@
   <div class="chat-container">
     <div class="chat-box" id="chatBox">
       <div class="bot-message message">
-        👋 ¡Hola! Soy tu asistente de mantenimiento. Puedes preguntarme sobre limpieza de PC, celulares, redes, impresoras, laptops o consejos generales.
+        👋 ¡Hola! Soy tu asistente de mantenimiento. Puedes preguntarme sobre mantenimiento de computadoras, redes, celulares, impresoras o pedir consejos.  
       </div>
     </div>
 
     <div class="quick-buttons">
-      <button onclick="quickTopic('limpiar computadora')">🧼 Limpieza</button>
-      <button onclick="quickTopic('mantenimiento de celulares')">📱 Celulares</button>
-      <button onclick="quickTopic('problemas de red')">🌐 Redes</button>
-      <button onclick="quickTopic('impresora no imprime')">🖨️ Impresoras</button>
-      <button onclick="quickTopic('consejos')">💡 Consejos</button>
+      <button onclick="quickTopic('tipos de mantenimiento')">Tipos de mantenimiento</button>
+      <button onclick="quickTopic('impresoras')">Impresoras</button>
+      <button onclick="quickTopic('redes')">Redes</button>
+      <button onclick="quickTopic('celulares')">Celulares</button>
+      <button onclick="quickTopic('consejos')">Consejos</button>
     </div>
 
     <div class="input-box">
@@ -125,63 +123,14 @@
   </div>
 
   <script>
-    const faqData = [
-      {
-        keywords: [/tipos.*mantenimiento/i],
-        response: `🔧 Tipos de mantenimiento:
-1️⃣ Preventivo: limpieza y revisión periódica.
-2️⃣ Correctivo: cuando ya hay fallas.
-3️⃣ Predictivo: análisis para evitar fallos futuros.`
-      },
-      {
-        keywords: [/cada cuánto.*limpiar/i, /frecuencia.*limpieza/i],
-        response: `🧽 Se recomienda limpiar tu PC o laptop cada 3 a 6 meses, especialmente los ventiladores. Usa aire comprimido y evita líquidos.`
-      },
-      {
-        keywords: [/no.*mantenimiento.*celular/i, /pasa.*no cuido.*celular/i],
-        response: `⚠️ Si no mantienes tu celular, puede calentarse, ponerse lento, fallar la batería o dañarse el puerto de carga.`
-      },
-      {
-        keywords: [/problema.*impresora/i, /impresora.*no imprime/i],
-        response: `🖨️ Si tu impresora no imprime o tiene rayas, revisa los cartuchos, los cabezales y el software del controlador.`
-      },
-      {
-        keywords: [/mantenimiento.*laptop/i, /cuidar.*portátil/i],
-        response: `💻 Para mantener tu laptop:
-- Limpia el ventilador
-- Actualiza drivers
-- Cambia pasta térmica cada 2 años
-- Usa bases refrigerantes`
-      },
-      {
-        keywords: [/wifi/i, /red.*lenta/i, /internet.*lento/i],
-        response: `🌐 Tu Wi-Fi puede mejorar si:
-- Ubicas el router en un lugar alto
-- Usas la banda 5GHz
-- Desconectas equipos no usados
-- Cambias la contraseña cada cierto tiempo`
-      },
-      {
-        keywords: [/consejos/i, /recomendaciones/i],
-        response: `💡 Consejos generales:
-- Actualiza tus equipos regularmente
-- Usa antivirus confiables
-- Evita sobrecalentamientos
-- No ignores errores del sistema`
-      },
-      {
-        keywords: [/hola/i, /buenas/i],
-        response: `🙋‍♂️ ¡Hola! ¿Sobre qué mantenimiento necesitas ayuda? Puedo orientarte con laptops, redes, celulares, impresoras y más.`
-      }
-    ];
-
     function sendMessage() {
       const input = document.getElementById('userInput');
       const message = input.value.trim();
-      if (!message) return;
+      if (message === "") return;
+
       addMessage(message, 'user');
-      getBotResponse(message);
-      input.value = '';
+      respond(message);
+      input.value = "";
     }
 
     function quickTopic(text) {
@@ -198,24 +147,45 @@
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function getBotResponse(message) {
-      const lowerMsg = message.toLowerCase();
-      let found = false;
+    function respond(userMessage) {
+      const msg = userMessage.toLowerCase();
+      let response = "⚠️ Lo siento, no entendí tu pregunta. Prueba con: mantenimiento de redes, impresoras, consejos, etc.";
 
-      for (const entry of faqData) {
-        for (const pattern of entry.keywords) {
-          if (pattern.test(lowerMsg)) {
-            setTimeout(() => addMessage(entry.response, 'bot'), 500);
-            found = true;
-            break;
-          }
-        }
-        if (found) break;
+      if (msg.includes("tipos de mantenimiento")) {
+        response = `🔧 Tipos de mantenimiento tecnológico:
+1️⃣ **Preventivo**: Limpieza, actualizaciones, revisión de fallos.
+2️⃣ **Correctivo**: Reparación tras una falla.
+3️⃣ **Predictivo**: Uso de herramientas para anticipar problemas.`;
+      } else if (msg.includes("impresora")) {
+        response = `🖨️ Mantenimiento de impresoras:
+- Limpia los rodillos y cabezales con productos adecuados.
+- Usa cartuchos originales o de buena calidad.
+- Evita dejarla sin usar mucho tiempo (la tinta se seca).
+- Revisa el software y controladores.`;
+      } else if (msg.includes("redes")) {
+        response = `🌐 Mantenimiento de redes:
+- Verifica cables y conectores.
+- Actualiza el firmware del router.
+- Cambia contraseñas regularmente.
+- Usa herramientas para detectar puntos débiles o lentitud.`;
+      } else if (msg.includes("celular") || msg.includes("móvil")) {
+        response = `📱 Mantenimiento de celulares:
+- Limpia puertos de carga con cuidado.
+- No instales apps de fuentes desconocidas.
+- Libera espacio eliminando caché y apps no usadas.
+- Usa fundas protectoras y protege la batería.`;
+      } else if (msg.includes("consejos")) {
+        response = `✅ Consejos de mantenimiento general:
+- 🧼 Limpia tu equipo cada 3 meses.
+- 🔄 Actualiza sistema y drivers regularmente.
+- 🔋 Evita sobrecalentamientos.
+- 💾 Haz copias de seguridad.
+- ⚠️ No ignores mensajes de error.`;
+      } else if (msg.includes("hola") || msg.includes("buenos días") || msg.includes("buenas tardes")) {
+        response = "👋 ¡Hola! ¿Te gustaría saber sobre tipos de mantenimiento, consejos o cómo cuidar tus dispositivos?";
       }
 
-      if (!found) {
-        setTimeout(() => addMessage("🤔 No estoy seguro de eso aún. Intenta preguntarme sobre mantenimiento, limpieza o consejos tecnológicos.", 'bot'), 500);
-      }
+      setTimeout(() => addMessage(response, 'bot'), 500);
     }
   </script>
 </body>
