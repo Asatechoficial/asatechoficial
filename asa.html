@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot de Mantenimiento</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e9f0f4;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      background-color: #ffffff;
+      width: 420px;
+      max-height: 700px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.4;
+    }
+
+    .user-message {
+      background-color: #d1e7dd;
+      align-self: flex-end;
+    }
+
+    .bot-message {
+      background-color: #f0f0f0;
+      align-self: flex-start;
+    }
+
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .input-box button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .input-box button:hover {
+      background-color: #45a049;
+    }
+
+    .quick-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+
+    .quick-buttons button {
+      flex: 1;
+      font-size: 14px;
+      padding: 6px 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .quick-buttons button:hover {
+      background-color: #d9ead3;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-box" id="chatBox">
+      <div class="bot-message message">
+        👋 ¡Hola! Soy tu asistente de mantenimiento. Puedes preguntarme sobre mantenimiento de computadoras, redes, celulares, impresoras o pedir consejos.  
+      </div>
+    </div>
+
+    <div class="quick-buttons">
+      <button onclick="quickTopic('tipos de mantenimiento')">Tipos de mantenimiento</button>
+      <button onclick="quickTopic('impresoras')">Impresoras</button>
+      <button onclick="quickTopic('redes')">Redes</button>
+      <button onclick="quickTopic('celulares')">Celulares</button>
+      <button onclick="quickTopic('consejos')">Consejos</button>
+    </div>
+
+    <div class="input-box">
+      <input type="text" id="userInput" placeholder="Escribe tu pregunta..." />
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (message === "") return;
+
+      addMessage(message, 'user');
+      respond(message);
+      input.value = "";
+    }
+
+    function quickTopic(text) {
+      document.getElementById('userInput').value = text;
+      sendMessage();
+    }
+
+    function addMessage(text, sender) {
+      const chatBox = document.getElementById('chatBox');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `${sender}-message message`;
+      messageDiv.textContent = text;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+function respond(userMessage) {
+  const msg = userMessage.toLowerCase();
+  let response = "🤔 Lo siento, aún no sé cómo responder eso. Intenta con otra pregunta sobre mantenimiento.";
+
+  if (msg.includes("tipos de mantenimiento")) {
+    response = `🔧 Tipos de mantenimiento:
+1️⃣ Preventivo: limpieza, revisión periódica.
+2️⃣ Correctivo: cuando ya hay fallos.
+3️⃣ Predictivo: anticiparse a problemas con análisis.`;
+  } else if (msg.includes("cada cuánto") && msg.includes("limpiar")) {
+    response = `🧽 Es recomendable limpiar tu computadora cada 3 o 6 meses si está en un ambiente polvoriento. Usa aire comprimido para los ventiladores y evita líquidos directamente.`;
+  } else if (msg.includes("qué pasa") && msg.includes("no le doy mantenimiento") && msg.includes("celular")) {
+    response = `📱 Si no le das mantenimiento a tu celular, puede calentarse, ir más lento, llenarse de basura digital o incluso dañarse el puerto de carga o la batería.`;
+  } else if (msg.includes("impresora") && msg.includes("problema")) {
+    response = `🖨️ Si tu impresora:
+- Imprime con rayas
+- No reconoce cartuchos
+- Hace ruidos extraños
+- Tarda mucho en imprimir
+
+...podría necesitar limpieza de cabezales, reinicio o cambio de drivers.`;
+  } else if (msg.includes("mantenimiento") && (msg.includes("laptop") || msg.includes("portátil"))) {
+    response = `💻 A una laptop debes hacerle:
+- Limpieza de ventiladores
+- Cambio de pasta térmica cada 1-2 años
+- Revisar batería y actualizar drivers
+- Evitar sobrecalentamientos con base ventilada`;
+  } else if (msg.includes("wifi") || msg.includes("wi-fi")) {
+    response = `🌐 Consejos para que tu red Wi-Fi no se vuelva lenta:
+- Cambia la contraseña cada cierto tiempo
+- Ubica el router en un lugar alto y central
+- Desconecta dispositivos que no uses
+- Usa la banda 5GHz si es posible`;
+  } else if (msg.includes("consejos")) {
+    response = `🛠️ Consejos generales:
+- Limpia tu equipo regularmente
+- Haz copias de seguridad
+- Actualiza tu antivirus
+- No ignores errores o mensajes raros
+- Mantén buena ventilación en tus dispositivos`;
+  } else if (msg.includes("hola") || msg.includes("buenas")) {
+    response = "👋 ¡Hola! Soy tu asistente en mantenimiento. Puedes preguntarme sobre limpieza, redes, celulares, laptops, impresoras y más.";
+  }
+
+  setTimeout(() => addMessage(response, 'bot'), 500);
+}
+
+  </script>
+</body>
+</html>
