@@ -23,23 +23,25 @@
   z-index: -1;
 }
 
+
     .chat-container {
       width: 100%;
       max-width: 450px;
       height: 90vh;
-      background: white;
+      background: linear-gradient(45deg, #74ebd5, #acb6e5, #fbc2eb, #a18cd1);
       border-radius: 16px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 20px rgb(162, 250, 253);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    .chat-box {
+     .chat-box {
       flex: 1;
       padding: 20px;
       overflow-y: auto;
     }
+
 
     .message {
       margin-bottom: 12px;
@@ -104,6 +106,14 @@
 
     .quick-buttons button:hover {
       background: #c3e6cb;
+
+      @keyframes gradientBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
     }
   </style>
 </head>
@@ -117,7 +127,7 @@
     </div>
 
     <div class="quick-buttons">
-      <button onclick="quickTopic('tipos de mantenimiento')">🔧 Tipos</button>
+      <button onclick="quickTopic('tipos de mantenimiento')">🔧 Mantenimiento</button>
       <button onclick="quickTopic('limpieza de computadora')">🧼 Limpieza</button>
       <button onclick="quickTopic('mantenimiento de celular')">📱 Celular</button>
       <button onclick="quickTopic('impresora no imprime')">🖨️ Impresora</button>
@@ -289,7 +299,7 @@ Escríbeme tu pregunta para comenzar.`
     tsParticles.load("tsparticles", {
   particles: {
     number: {
-      value: 100,
+      value: 150,
     },
     size: {
       value: 3,
@@ -301,7 +311,7 @@ Escríbeme tu pregunta para comenzar.`
     links: {
       enable: true,
       distance: 150,
-      color: "#cccccc",
+      color: "#0a509b",
       opacity: 0.4,
       width: 1
     }
@@ -315,7 +325,7 @@ Escríbeme tu pregunta para comenzar.`
     }
   },
   background: {
-    color: "#0a509b"
+    color: "#000000"
   }
 });
 
