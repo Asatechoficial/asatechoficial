@@ -329,6 +329,13 @@ Escríbeme tu pregunta para comenzar.`
   }
 });
 
+      // ⌨️ Permite enviar con Enter
+    document.getElementById("userInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
+
   </script>
 </body>
 </html>
