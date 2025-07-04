@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <style>
-    body {margin: 0;
+    body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       justify-content: center;
@@ -15,33 +16,33 @@
     }
 
     #tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    }
 
     .chat-container {
       width: 100%;
       max-width: 450px;
       height: 90vh;
-      background: linear-gradient(45deg, #74ebd5, #acb6e5, #fbc2eb, #a18cd1);
+      background: linear-gradient(45deg, #000000, #000000, #000000, #000000);
+      border: 6px solid rgba(255, 255, 255, 0.3);
       border-radius: 16px;
-      box-shadow: 0 5px 20px rgb(162, 250, 253);
+      box-shadow: 0 5px 29px rgb(0, 0, 0);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-     .chat-box {
+    .chat-box {
       flex: 1;
       padding: 20px;
       overflow-y: auto;
     }
-
 
     .message {
       margin-bottom: 12px;
@@ -52,7 +53,7 @@
     }
 
     .user-message {
-      background: #d1e7dd;
+      background: #c9eeeb;
       align-self: flex-end;
     }
 
@@ -105,20 +106,18 @@
     }
 
     .quick-buttons button:hover {
-      background: #c3e6cb;
+      background: #c3d1e6;
+    }
 
-      @keyframes gradientBorder {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-
+    @keyframes gradientBorder {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-    <div id="tsparticles"></div>
+  <div id="tsparticles"></div>
   <div class="chat-container">
     <div class="chat-box" id="chatBox">
       <div class="bot-message message">
@@ -141,56 +140,56 @@
   </div>
 
   <script>
-const faqData = [
-  {
-    patterns: [/tipos.*mantenimiento/i],
-    response: `🔧 Tipos de Mantenimiento Tecnológico:
+    const faqData = [
+      {
+        patterns: [/tipos.*mantenimiento/i],
+        response: `<strong>🔧 Tipos de Mantenimiento Tecnológico:</strong>
 
-1️⃣ Mantenimiento preventivo: acciones que se realizan antes de que surja un problema, como limpieza interna, revisión de cables, actualización de software, y cambio periódico de componentes que tienden a desgastarse.
+1️⃣ <strong>Mantenimiento preventivo:</strong> acciones que se realizan antes de que surja un problema, como limpieza interna, revisión de cables, actualización de software, y cambio periódico de componentes que tienden a desgastarse.
 
-2️⃣ Mantenimiento correctivo: se lleva a cabo cuando ya se ha presentado una falla. Ejemplo: cambiar una batería dañada, formatear un sistema infectado o reemplazar una pieza rota.
+2️⃣ <strong>Mantenimiento correctivo:</strong> se lleva a cabo cuando ya se ha presentado una falla. Ejemplo: cambiar una batería dañada, formatear un sistema infectado o reemplazar una pieza rota.
 
-3️⃣ Mantenimiento predictivo: usa sensores o análisis de datos para anticiparse a posibles fallos. Es común en empresas grandes y ayuda a evitar tiempos muertos costosos.
+3️⃣ <strong>Mantenimiento predictivo:</strong> usa sensores o análisis de datos para anticiparse a posibles fallos. Es común en empresas grandes y ayuda a evitar tiempos muertos costosos.
 
 ✅ Aplicar estos tipos adecuadamente prolonga la vida útil de los equipos.`
-  },
-  {
-    patterns: [/cada cuánto.*limpiar/i, /frecuencia.*limpieza/i, /limpieza.*computadora/i],
-    response: `🧽 ¿Cada cuánto limpiar tu computadora o laptop?
+      },
+      {
+        patterns: [/cada cuánto.*limpiar/i, /frecuencia.*limpieza/i, /limpieza.*computadora/i],
+        response: `🧽 <strong>¿Cada cuánto limpiar tu computadora o laptop?</strong>
 
 - 💻 Si usas tu computadora a diario: cada 3 meses.
 - 🐶 Si tienes mascotas o mucho polvo: cada 1 a 2 meses.
 
-Pasos recomendados:
+<strong>Pasos recomendados:</strong>
 - Apaga y desconecta el equipo.
 - Usa aire comprimido para los ventiladores, teclado y puertos.
 - Limpia la pantalla con paño de microfibra y líquido especial para pantallas.
 - Si tienes conocimientos técnicos, abre la torre/laptop y limpia el polvo interno.
 
 ⚠️ ¡No uses agua ni alcohol directamente! Y evita usar la aspiradora sobre componentes electrónicos.`
-  },
-  {
-    patterns: [/celular/i, /mantenimiento.*teléfono/i],
-    response: `📱 Mantenimiento básico para celulares:
+      },
+      {
+        patterns: [/celular/i, /mantenimiento.*teléfono/i],
+        response: `📱 <strong>Mantenimiento básico para celulares:</strong>
 
-✅ Físico:
+✅ <strong>Físico:</strong>
 - Limpia el puerto de carga con un cepillo pequeño y seco.
 - Usa fundas y protectores de pantalla.
 - No expongas el teléfono a calor excesivo ni humedad.
 
-✅ Interno:
+✅ <strong>Interno:</strong>
 - Borra apps que no uses.
 - Limpia caché y archivos basura.
 - Reinicia el dispositivo al menos una vez por semana.
 - Actualiza el sistema operativo y las apps.
 
 🔋 Consejo: Evita cargarlo toda la noche y no lo uses mientras se carga, para preservar la batería.`
-  },
-  {
-    patterns: [/impresora/i, /no imprime/i],
-    response: `🖨️ Solución a problemas comunes de impresoras:
+      },
+      {
+        patterns: [/impresora/i, /no imprime/i],
+        response: `🖨️ <strong>Solución a problemas comunes de impresoras:</strong>
 
-✅ Verifica lo siguiente:
+✅ <strong>Verifica lo siguiente:</strong>
 - Que el cable USB esté conectado correctamente o que la red Wi-Fi funcione.
 - Que los cartuchos estén bien colocados y tengan tinta o tóner.
 - Que no haya atascos de papel (abre la tapa y revisa).
@@ -198,59 +197,58 @@ Pasos recomendados:
 🔧 Usa la opción de "Limpieza de cabezales" si imprime líneas o manchas.
 
 📥 Reinstala el controlador desde el sitio web del fabricante si el sistema no la reconoce.`
-  },
-  {
-    patterns: [/wifi/i, /internet.*lento/i],
-    response: `🌐 ¿Internet lento? Aquí tienes consejos:
+      },
+      {
+        patterns: [/wifi/i, /internet.*lento/i],
+        response: `🌐 <strong>¿Internet lento? Aquí tienes consejos:</strong>
 
-📡 Optimiza tu Wi-Fi:
+📡 <strong>Optimiza tu Wi-Fi:</strong>
 - Coloca el router en un punto alto y central de la casa.
 - Evita obstáculos como paredes o muebles pesados.
 - Aleja el router de microondas, teléfonos inalámbricos u otros dispositivos que generen interferencia.
 
-🔐 Seguridad:
+🔐 <strong>Seguridad:</strong>
 - Usa una contraseña fuerte para evitar que intrusos usen tu red.
 
 📱 Reinicia tu router cada semana para mejorar el rendimiento y liberar memoria.
 
-⚙️ Velocidad por cable: Si necesitas mejor rendimiento, conecta el equipo por Ethernet.`
-  },
-  {
-    patterns: [/consejos/i, /recomendaciones/i],
-    response: `🛠️ Consejos generales de mantenimiento tecnológico:
+⚙️ <strong>Velocidad por cable:</strong> Si necesitas mejor rendimiento, conecta el equipo por Ethernet.`
+      },
+      {
+        patterns: [/consejos/i, /recomendaciones/i],
+        response: `🛠️ <strong>Consejos generales de mantenimiento tecnológico:</strong>
 
-🔋 Cuida la batería:
+🔋 <strong>Cuida la batería:</strong>
 - No dejes cargando tus dispositivos toda la noche.
 - Evita temperaturas extremas.
 
-💾 Realiza copias de seguridad:
+💾 <strong>Realiza copias de seguridad:</strong>
 - Usa la nube o un disco externo para guardar tus archivos importantes.
 
-🧼 Limpieza:
+🧼 <strong>Limpieza:</strong>
 - Limpia puertos, pantallas y teclados regularmente.
 - Usa fundas y protectores para tus dispositivos.
 
-🔍 Seguridad:
+🔍 <strong>Seguridad:</strong>
 - Mantén actualizado tu antivirus.
 - No abras correos o enlaces sospechosos.
 - Revisa que tus apps y sistemas estén actualizados.
 
-⚙️ Software:
+⚙️ <strong>Software:</strong>
 - Desinstala lo que no uses.
 - Borra el caché del navegador y de las apps.
 - Reinicia tus equipos al menos 1 vez por semana para liberar memoria.`
-  },
-  {
-    patterns: [/hola/i, /buenas/i],
-    response: `👋 ¡Hola! Estoy aquí para ayudarte con dudas sobre:
+      },
+      {
+        patterns: [/hola/i, /buenas/i],
+        response: `👋 ¡Hola! Estoy aquí para ayudarte con dudas sobre:
 - Computadoras, laptops y celulares
 - Problemas con redes Wi-Fi o impresoras
 - Consejos para mejorar el rendimiento de tus dispositivos
 
 Escríbeme tu pregunta para comenzar.`
-  }
-];
-
+      }
+    ];
 
     function sendMessage() {
       const input = document.getElementById("userInput");
@@ -271,7 +269,7 @@ Escríbeme tu pregunta para comenzar.`
       const chatBox = document.getElementById("chatBox");
       const msg = document.createElement("div");
       msg.className = `${sender}-message message`;
-      msg.textContent = text;
+      msg.innerHTML = text.replace(/\n/g, "<br>");
       chatBox.appendChild(msg);
       chatBox.scrollTop = chatBox.scrollHeight;
     }
@@ -296,45 +294,31 @@ Escríbeme tu pregunta para comenzar.`
       }
     }
 
-    tsParticles.load("tsparticles", {
-  particles: {
-    number: {
-      value: 150,
-    },
-    size: {
-      value: 3,
-    },
-    move: {
-      enable: true,
-      speed: 2
-    },
-    links: {
-      enable: true,
-      distance: 150,
-      color: "#0a509b",
-      opacity: 0.4,
-      width: 1
-    }
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-        mode: "repulse"
-      }
-    }
-  },
-  background: {
-    color: "#000000"
-  }
-});
-
-      // ⌨️ Permite enviar con Enter
-    document.getElementById("userInput").addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        sendMessage();
-      }
+    document.getElementById("userInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
     });
+
+    tsParticles.load("tsparticles", {
+      particles: {
+        number: { value: 150 },
+        size: { value: 3 },
+        move: { enable: true, speed: 2 },
+        links: {
+          enable: true,
+          distance: 150,
+          color: "#0a509b",
+          opacity: 0,
+          width: 1
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        }
+      },
+     
+    });
+
 
   </script>
 </body>
