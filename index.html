@@ -141,6 +141,13 @@
 
   <script>
     const faqData = [
+
+    {
+  patterns: [/alejandra/i],
+  response: `<img src="https://i.gifer.com/XI2s.gif" alt="GIF de Alejandra" style="max-width:100%; border-radius: 8px;">`
+    },
+
+
       {
         patterns: [/tipos.*mantenimiento/i],
         response: `<strong>🔧 Tipos de Mantenimiento Tecnológico:</strong>
@@ -272,6 +279,7 @@ Escríbeme tu pregunta para comenzar.`
       msg.innerHTML = text.replace(/\n/g, "<br>");
       chatBox.appendChild(msg);
       chatBox.scrollTop = chatBox.scrollHeight;
+
     }
 
     function respondToMessage(message) {
