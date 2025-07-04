@@ -13,17 +13,55 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-    }
+      /*background-image: linear-gradient(43deg, #222e68 0%, #021d42 100%);*/
+	background: #101522;
+	background-blend-mode: hard-light;
+	background-image: radial-gradient(circle at 20% 20%, #ffcc7066 10%, #ffcc7000 50%), radial-gradient(circle at 80% 80%, #0033ff66 10%, #0033ff00 50%),
+		radial-gradient(ellipse at 35% 70%, #00ff4866 10%, #00ff4800 50%), radial-gradient(ellipse at 70% 35%, #ff005d66 10%, #ff005d00 60%);
+	background-size: 250% 250%;
+	animation: background-animation 10s infinite;
+}
+@keyframes background-animation {
+	0% {
+		background-position: 5% 0%;
+	}
+	25% {
+		background-position: 20% 80%;
+	}
+	50% {
+		background-position: 96% 100%;
+	}
+	75% {
+		background-position: 80% 10%;
+	}
+	100% {
+		background-position: 5% 0%;
+	}
+}
+body::after {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	backdrop-filter: blur(4px);
+	background: radial-gradient(ellipse, #00000000, #000000cc);
+	z-index: -1;
+}
 
-    #tsparticles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    }
+
+ #particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -9999;
+  pointer-events: none;
+}
+
+
 
     .chat-container {
       width: 100%;
@@ -53,12 +91,12 @@
     }
 
     .user-message {
-      background: #c9eeeb;
+      background: #46c4ffde;
       align-self: flex-end;
     }
 
     .bot-message {
-      background: #e9ecef;
+      background: #7b72c7a4;
       align-self: flex-start;
     }
 
@@ -78,7 +116,7 @@
     .input-box button {
       background-color: #0089fa;
       color: white;
-      border: none;
+      border: 10px;
       padding: 0 20px;
       font-size: 16px;
       cursor: pointer;
@@ -117,7 +155,9 @@
   </style>
 </head>
 <body>
-  <div id="tsparticles"></div>
+  <div id ="particles-js">
+    <canvas class="particles-js-canvas-el" width="1350" height="945" style="width: 100%; height: 100%;"></canvas>
+  </div>
   <div class="chat-container">
     <div class="chat-box" id="chatBox">
       <div class="bot-message message">
@@ -141,6 +181,74 @@
 
   <script>
     const faqData = [
+
+    {
+  patterns: [/bater[ií]a/i, /cargar.*(celular|tel[eé]fono|laptop)/i],
+  response: `🔋 <strong>Cuidado de la batería:</strong><br>
+- No dejes tu dispositivo cargando toda la noche.<br>
+- Cárgalo cuando esté entre 20-30% y desconéctalo al llegar al 80-90%.<br>
+- Evita el calor: no cargues el dispositivo bajo el sol ni en superficies calientes.<br>
+- Usa cargadores originales para evitar daños.`
+},
+{
+  patterns: [/lento/i, /velocidad.*(computadora|laptop)/i],
+  response: `🐢 <strong>¿Tu computadora está lenta?</strong><br>
+✅ <strong>Soluciones:</strong><br>
+- Elimina archivos temporales y programas que no uses.<br>
+- Desactiva programas que se inician con Windows.<br>
+- Aumenta la memoria RAM o cambia a un disco SSD si es posible.<br>
+- Analiza si hay virus con un antivirus actualizado.`
+},
+{
+  patterns: [/actualizaci[oó]n/i, /actualizar.*(software|windows|apps)/i],
+  response: `🧩 <strong>Actualizaciones importantes:</strong><br>
+✅ Mantén tu sistema operativo, antivirus y programas actualizados para:<br>
+- Mejorar la seguridad.<br>
+- Corregir errores y vulnerabilidades.<br>
+- Aumentar la compatibilidad con hardware y nuevas funciones.<br>
+💡 Activa las actualizaciones automáticas siempre que sea posible.`
+},
+{
+  patterns: [/pantalla.*rota/i, /pantalla.*dañada/i],
+  response: `💔 <strong>Pantalla dañada:</strong><br>
+- Evita seguir usando el dispositivo si hay riesgo de corte o mal funcionamiento.<br>
+- Toma una foto de la pantalla para reclamar garantía si aplica.<br>
+- Contacta a un técnico de confianza para reemplazo de pantalla.<br>
+⚠️ No intentes repararla tú mismo si no tienes experiencia, podrías agravar el daño.`
+},
+{
+  patterns: [/antivirus/i, /proteger.*(computadora|pc|laptop)/i],
+  response: `🛡️ <strong>Antivirus y protección:</strong><br>
+- Usa antivirus confiables como Windows Defender, Avast, Bitdefender o Kaspersky.<br>
+- Manténlo actualizado y realiza análisis periódicos.<br>
+- Evita descargar archivos sospechosos o hacer clic en enlaces dudosos.<br>
+🔐 Navega en sitios seguros (https://) y usa contraseñas fuertes.`
+},
+{
+  patterns: [/seguridad/i, /evitar virus/i],
+  response: `🔐 <strong>Consejos de seguridad digital:</strong><br>
+- Usa contraseñas diferentes y fuertes en cada sitio.<br>
+- No uses redes Wi-Fi públicas para operaciones sensibles.<br>
+- Activa la verificación en dos pasos siempre que sea posible.<br>
+- No abras correos de remitentes desconocidos ni instales software no confiable.`
+},
+{
+  patterns: [/teclado/i, /mouse/i, /perif[eé]ricos/i],
+  response: `🖱️ <strong>Mantenimiento de periféricos:</strong><br>
+✅ <strong>Teclado:</strong> Usa aire comprimido y paño seco para limpiar entre teclas.<br>
+✅ <strong>Mouse:</strong> Limpia la parte óptica con un bastoncillo seco.<br>
+✅ <strong>Audífonos:</strong> Limpia la malla con cuidado y guarda en estuche.<br>
+🎧 Desconecta todo lo que no estés usando para ahorrar energía y evitar sobrecargas.`
+},
+{
+  patterns: [/no prende/i, /pantalla negra/i, /no enciende/i],
+  response: `⚠️ <strong>¿Tu equipo no enciende?</strong><br>
+🔌 Verifica que esté conectado y que el cargador funcione.<br>
+🔋 Si tiene batería removible, intenta un "reinicio forzado".<br>
+🧰 Si es laptop, desconecta todo (incluido cargador), mantén presionado el botón de encendido 30 segundos, reconecta y prueba.<br>
+❗ Si el problema persiste, podría ser un fallo interno (fuente, placa madre, etc.).`
+},
+
 
     {
   patterns: [/alejandra/i],
@@ -320,26 +428,73 @@ Escríbeme tu pregunta para comenzar.`
       if (e.key === "Enter") sendMessage();
     });
 
-    tsParticles.load("tsparticles", {
-      particles: {
-        number: { value: 150 },
-        size: { value: 3 },
-        move: { enable: true, speed: 2 },
-        links: {
-          enable: true,
-          distance: 150,
-          color: "#0a509b",
-          opacity: 0,
-          width: 1
-        }
-      },
-      interactivity: {
-        events: {
-          onhover: { enable: true, mode: "repulse" }
-        }
-      },
-     
-    });
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 500, /* Número ajustado para menos partículas */
+                    "density": {
+                        "enable": true,
+                        "value_area": 1000 /* Espacio más amplio para distribuir partículas */
+                    }
+                },
+                "color": {
+                    "value": "#98c0ef" /* Color blanco para efecto sutil */
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 0.8, /* Velocidad de cambio de opacidad */
+                        "opacity_min": 1.0,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": true,
+                        "speed": 2, /* Velocidad del cambio de tamaño */
+                        "size_min": 0.3,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": false /* Desactiva líneas entre partículas */
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 0.5, /* Velocidad suave para un movimiento sutil */
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false
+                    },
+                    "onclick": {
+                        "enable": false
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    
 
 
   </script>
