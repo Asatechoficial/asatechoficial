@@ -16,8 +16,8 @@
       /*background-image: linear-gradient(43deg, #222e68 0%, #021d42 100%);*/
 	background: #101522;
 	background-blend-mode: hard-light;
-	background-image: radial-gradient(circle at 20% 20%, #ffcc7066 10%, #ffcc7000 50%), radial-gradient(circle at 80% 80%, #0033ff66 10%, #0033ff00 50%),
-		radial-gradient(ellipse at 35% 70%, #00ff4866 10%, #00ff4800 50%), radial-gradient(ellipse at 70% 35%, #ff005d66 10%, #ff005d00 60%);
+	background-image: radial-gradient(circle at 20% 20%, #70ffd466 10%, #ffcc7000 50%), radial-gradient(circle at 80% 80%, #0033ff66 10%, #0033ff00 50%),
+		radial-gradient(ellipse at 35% 70%, #b700ff66 10%, #00ff4800 50%), radial-gradient(ellipse at 70% 35%, #ff005d66 10%, #ff005d00 60%);
 	background-size: 250% 250%;
 	animation: background-animation 10s infinite;
 }
@@ -51,14 +51,141 @@ body::after {
 }
 
 
+
  #particles-js {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -9999;
+  z-index: 0; /* En lugar de -9999 */
   pointer-events: none;
+}
+
+.faq-sidebar {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 230px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px #00000088;
+  z-index: 1000;
+}
+
+.faq-sidebar h3 {
+  margin: 0;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  background: #101522; /* Fondo sólido oscuro */
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.faq-sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+}
+
+.faq-sidebar li {
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  background: #ffffff1a;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.faq-sidebar li:hover {
+  background: #ffffff33;
+}
+
+.faq-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #101522;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 16px;
+  font-size: 16px;
+  z-index: 2000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .faq-sidebar {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 85%;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1500;
+  }
+
+  .faq-sidebar.active {
+    display: block;
+  }
+
+  .faq-toggle {
+    display: block;
+  }
+}
+
+
+.faq-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.faq-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.faq-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.faq-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.chat-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }
 
 
@@ -74,6 +201,7 @@ body::after {
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      z-index: 1;
     }
 
     .chat-box {
@@ -81,6 +209,133 @@ body::after {
       padding: 20px;
       overflow-y: auto;
     }
+
+    /*CAMBIO DE MODO OSCURO/CLARO--------------------------------------------------------------------------*/
+
+body,
+.chat-container,
+.user-message,
+.bot-message,
+.input-box input,
+.input-box button,
+.faq-sidebar,
+.faq-sidebar li {
+  transition: background-color 0.4s ease, color 0.4s ease, border 0.4s ease;
+}
+
+
+.switch-theme {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 52px;
+  height: 26px;
+  display: inline-block;
+  z-index: 2000;
+}
+
+.switch-theme input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #555;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 0.4s;
+}
+
+.slider::before {
+  content: "🌙";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px);
+  content: "☀️";
+}
+
+
+
+
+body.light-theme {
+  background: #f2f2f2;
+  color: #111;
+}
+
+body.light-theme .chat-container {
+  background: #ffffff;
+  border: 4px solid #ccc;
+  box-shadow: 0 0 12px #999;
+}
+
+body.light-theme .user-message {
+  background: #dbeafe;
+  color: #111;
+}
+
+body.light-theme .bot-message {
+  background: #e5e5f7;
+  color: #111;
+}
+
+body.light-theme .input-box input,
+body.light-theme .input-box button {
+  color: #111;
+}
+
+body.light-theme .faq-sidebar {
+  background: #ffffffdd;
+  color: #111;
+}
+
+body.light-theme .faq-title {
+  color: #f7f7f7;
+}
+
+body.light-theme .faq-sidebar li {
+  background: #eee;
+}
+
+body.light-theme .faq-sidebar li:hover {
+  background: #ddd;
+}
+
+body.light-theme .chat-box::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .chat-box::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .chat-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+
 
     .message {
       margin-bottom: 12px;
@@ -96,7 +351,7 @@ body::after {
     }
 
     .bot-message {
-      background: #7b72c7a4;
+      background: #8a81e0;
       align-self: flex-start;
     }
 
@@ -152,9 +407,31 @@ body::after {
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    /*------------Animacion de transicion tonos--------------------*/
+    @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
   </style>
 </head>
 <body>
+  <label class="switch-theme">
+  <input type="checkbox" id="themeToggleSwitch">
+  <span class="slider"></span>
+</label>
+
   <div id ="particles-js">
     <canvas class="particles-js-canvas-el" width="1350" height="945" style="width: 100%; height: 100%;"></canvas>
   </div>
@@ -165,13 +442,27 @@ body::after {
       </div>
     </div>
 
-    <div class="quick-buttons">
-      <button onclick="quickTopic('tipos de mantenimiento')">🔧 Mantenimiento</button>
-      <button onclick="quickTopic('limpieza de computadora')">🧼 Limpieza</button>
-      <button onclick="quickTopic('mantenimiento de celular')">📱 Celular</button>
-      <button onclick="quickTopic('impresora no imprime')">🖨️ Impresora</button>
-      <button onclick="quickTopic('wifi lento')">🌐 Wi-Fi</button>
-    </div>
+<div class="faq-sidebar">
+  <h3 class="faq-title">😉 Preguntas frecuentes</h3>
+  <ul>
+    <li onclick="quickTopic('¿como limpiar mi computadora?')">🧽 ¿como limpiar mi computadora?</li>
+    <li onclick="quickTopic('¿Como puedo hablar con el tecnico?')">👩‍💻 ¿Como puedo hablar con el tecnico?</li>
+    <li onclick="quickTopic('¿Cada cuánto debo hacer mantenimiento?')">🔧 ¿Cada cuánto debo hacer mantenimiento?</li>
+    <li onclick="quickTopic('¿Qué antivirus me recomiendas?')">🛡️ ¿Qué antivirus me recomiendas?</li>
+    <li onclick="quickTopic('¿Cómo mejorar la velocidad de mi PC?')">🏃🌫️ ¿Cómo mejorar la velocidad de mi PC?</li>
+    <li onclick="quickTopic('¿Qué hacer si mi laptop no prende?')">⚠️ ¿Qué hacer si mi laptop no prende?</li>
+    <li onclick="quickTopic('¿Por qué va lenta mi computadora?')">🐢 ¿Por qué va lenta mi computadora?</li>
+    <li onclick="quickTopic('¿Cada cuánto limpiar el PC?')">🧼 ¿Cada cuánto limpiar el PC?</li>
+    <li onclick="quickTopic('¿Cómo cuidar la batería de mi celular?')">🔋 ¿Cómo cuidar la batería de mi celular?</li>
+    <li onclick="quickTopic('¿Qué tipos de mantenimiento existen?')">🔧 ¿Qué tipos de mantenimiento existen?</li>
+    <li onclick="quickTopic('¿Por qué no imprime mi impresora?')">🖨️ ¿Por qué no imprime mi impresora?</li>
+    <li onclick="quickTopic('¿Cómo mejorar el internet en casa?')">🌐 ¿Cómo mejorar el internet en casa?</li>
+    <li onclick="quickTopic('¿Qué hacer si la pantalla está rota?')">📱 ¿Qué hacer si la pantalla está rota?</li>
+  </ul>
+</div>
+
+
+
 
     <div class="input-box">
       <input type="text" id="userInput" placeholder="Escribe tu pregunta...">
@@ -181,6 +472,131 @@ body::after {
 
   <script>
     const faqData = [
+
+   {
+  patterns: [/¿?c[oó]mo.*limpiar.*(computadora|pc|laptop)/i, /limpiar.*(computadora|pc|laptop)/i],
+  response: `🧼 <strong>¿Cómo limpiar tu computadora?</strong><br>
+Para mantener tu equipo en buen estado, sigue estos pasos:<br><br>
+✅ <strong>Exterior:</strong><br>
+- Usa un paño de microfibra ligeramente humedecido (sin alcohol).<br>
+- Limpia la pantalla con líquido especial para pantallas.<br>
+- Usa aire comprimido para teclado y ranuras.<br><br>
+✅ <strong>Interior (solo si sabes abrirla):</strong><br>
+- Desconecta el equipo completamente.<br>
+- Usa aire comprimido para retirar el polvo de ventiladores, fuente de poder y tarjeta madre.<br><br>
+⚠️ Evita usar agua o aspiradoras. Hazlo cada 3 meses o más seguido si hay polvo o mascotas.`
+},
+
+{
+  patterns: [/hablar.*t[eé]cnico/i, /comunicarme.*t[eé]cnico/i, /soporte.*t[eé]cnico/i, /contactar.*t[eé]cnico/i],
+  response: `👨‍🔧 <strong>¿Necesitas hablar con un técnico?</strong><br>
+Puedes comunicarte directamente con un técnico especializado a través de los siguientes medios:<br><br>
+📞 <strong>Teléfono o WhatsApp:</strong> <em>3175048010</em><br>
+📧 <strong>Correo:</strong> <em>asatechoficial@gmail.com</em><br>
+🕐 <strong>Horario de atención:</strong> Lunes a Viernes, de 9:00 a.m. a 7:30 p.m.<br><br>
+También puedes dejar tus datos y uno de nuestros técnicos se pondrá en contacto contigo.`
+},
+
+
+{
+  patterns: [/cada cu[aá]nto.*mantenimiento/i, /frecuencia.*mantenimiento/i],
+  response: `🧰 <strong>¿Cada cuánto debo hacer mantenimiento?</strong><br>
+Depende del uso, pero en general:<br><br>
+💻 <strong>Computadoras de oficina:</strong> cada 6 meses.<br>
+🧑‍🔧 <strong>Uso intensivo o con polvo/mascotas:</strong> cada 2-3 meses.<br>
+📱 <strong>Celulares:</strong> limpieza mensual y revisión semestral.<br><br>
+✅ Hacerlo regularmente evita daños, sobrecalentamiento y lentitud.`
+},
+
+{
+  patterns: [/mejorar.*(velocidad|rendimiento).*pc/i, /pc.*(lento|despacio)/i],
+  response: `🚀 <strong>¿Cómo mejorar la velocidad de mi PC?</strong><br>
+Aquí tienes algunas formas de mejorar su rendimiento:<br><br>
+- Elimina programas que no uses desde el panel de control.<br>
+- Desactiva aplicaciones al iniciar con el sistema.<br>
+- Limpia archivos temporales y caché.<br>
+- Cambia el disco duro a SSD y aumenta la RAM si es posible.<br><br>
+🔄 Reinicia tu equipo al menos una vez por semana.`
+},
+
+
+{
+  patterns: [/qu[eé].*antivirus.*recomiendas/i, /mejor.*antivirus/i],
+  response: `🛡️ <strong>Antivirus recomendados:</strong><br>
+Para proteger tu equipo, estos son algunos confiables:<br><br>
+✅ Gratuitos:<br>
+- Windows Defender (ya viene con Windows)<br>
+- Avast Free Antivirus<br><br>
+✅ De pago (más funciones):<br>
+- Bitdefender<br>
+- Kaspersky<br>
+- ESET NOD32<br><br>
+🧠 Actualízalos y escanea tu equipo regularmente.`
+},
+
+{
+  patterns: [/no prende/i, /laptop.*no enciende/i],
+  response: `⚠️ <strong>¿Tu laptop no prende?</strong><br>
+🔋 Verifica el cargador y la batería.<br>
+🔘 Haz un reinicio forzado (30 seg. botón encendido).<br>
+🧰 Si sigue sin responder, acude a un técnico para revisar placa o fuente.`
+},
+{
+  patterns: [/lenta/i, /va lenta/i],
+  response: `🐢 <strong>¿Computadora lenta?</strong><br>
+✅ Limpia archivos basura.<br>
+✅ Desactiva programas innecesarios.<br>
+✅ Cambia a SSD o aumenta RAM.<br>
+✅ Revisa si hay virus.`
+},
+{
+  patterns: [/cada cu[aá]nto.*limpiar/i],
+  response: `🧽 <strong>Frecuencia de limpieza:</strong><br>
+- En entornos limpios: cada 3 meses.<br>
+- Con mascotas o polvo: cada mes.<br>
+💡 Usa aire comprimido y evita agua.`
+},
+{
+  patterns: [/cuidar.*bater[ií]a.*celular/i],
+  response: `🔋 <strong>Cuidado de batería de celular:</strong><br>
+✅ No dejes cargar toda la noche.<br>
+✅ Evita descargarlo por completo.<br>
+✅ Usa cargadores originales.<br>
+✅ No uses el celular mientras carga.`
+},
+{
+  patterns: [/tipos.*mantenimiento/i],
+  response: `🔧 <strong>Tipos de mantenimiento:</strong><br>
+- Preventivo: limpieza, actualizaciones.<br>
+- Correctivo: reparar fallos.<br>
+- Predictivo: análisis antes de fallos.<br>
+💡 Combinarlos mejora la vida útil del equipo.`
+},
+{
+  patterns: [/impresora.*no imprime/i],
+  response: `🖨️ <strong>Solución de impresoras:</strong><br>
+✅ Revisa conexión USB/Wi-Fi.<br>
+✅ Asegúrate de que tenga tinta o tóner.<br>
+✅ Verifica si hay papel atascado.<br>
+🔧 Usa limpieza de cabezales.`
+},
+{
+  patterns: [/mejorar.*internet/i, /wifi.*lento/i],
+  response: `🌐 <strong>Mejorar Wi-Fi en casa:</strong><br>
+✅ Coloca el router en lugar alto y central.<br>
+✅ Reinicia el router semanalmente.<br>
+✅ Usa cable Ethernet si es posible.<br>
+✅ Evita interferencias (microondas, muros gruesos).`
+},
+{
+  patterns: [/pantalla.*rota/i, /pantalla.*dañada/i],
+  response: `📱 <strong>Pantalla rota:</strong><br>
+- No sigas usándola si hay riesgo de cortes.<br>
+- Haz fotos si está en garantía.<br>
+- Lleva a un técnico para cambio seguro.<br>
+⚠️ No intentes repararla sin experiencia.`
+},
+
 
     {
   patterns: [/bater[ií]a/i, /cargar.*(celular|tel[eé]fono|laptop)/i],
@@ -247,6 +663,74 @@ body::after {
 🔋 Si tiene batería removible, intenta un "reinicio forzado".<br>
 🧰 Si es laptop, desconecta todo (incluido cargador), mantén presionado el botón de encendido 30 segundos, reconecta y prueba.<br>
 ❗ Si el problema persiste, podría ser un fallo interno (fuente, placa madre, etc.).`
+},
+
+{
+  patterns: [/no carga/i, /problema.*(cargador|adaptador)/i],
+  response: `🔌 <strong>¿Tu laptop no carga?</strong><br>
+✅ Verifica lo siguiente:<br>
+- Conecta el cargador en otro tomacorriente.<br>
+- Revisa si el cable o el conector están dañados.<br>
+- Asegúrate de que el puerto de carga no tenga polvo o suciedad.<br>
+⚠️ Si la batería está muy descargada, puede tardar en encender.<br>
+🔧 Prueba con otro cargador compatible si tienes acceso.`
+},
+
+{
+  patterns: [/no (suena|tiene sonido)/i, /problema.*(audio|parlantes)/i],
+  response: `🔊 <strong>¿Sin sonido?</strong><br>
+✅ Revisa esto:<br>
+- Asegúrate de que no esté en "modo silencio".<br>
+- Verifica el volumen y los altavoces predeterminados del sistema.<br>
+- Reinstala o actualiza el controlador de audio desde el administrador de dispositivos.<br>
+- Prueba con audífonos para saber si es un problema físico.<br>
+🔧 Si es externo (bocinas), prueba con otro cable o puerto.`
+},
+
+{
+  patterns: [/calienta/i, /sobrecalienta/i],
+  response: `🔥 <strong>¿Tu equipo se calienta mucho?</strong><br>
+✅ Posibles causas:<br>
+- Acumulación de polvo en los ventiladores o rejillas.<br>
+- Uso intensivo de CPU o gráficos (juegos, edición, etc.).<br>
+- Pasta térmica seca o mal aplicada.<br>
+🧼 Solución:<br>
+- Limpieza interna con aire comprimido.<br>
+- Usa una base refrigerante.<br>
+- Verifica el uso de CPU desde el Administrador de Tareas.<br>
+⚠️ Si sigue ocurriendo, consulta un técnico para revisión térmica.`
+},
+
+{
+  patterns: [/limpiar.*(pantalla|monitor|televisor)/i],
+  response: `📺 <strong>Limpieza de pantallas:</strong><br>
+✅ Usa un paño de microfibra ligeramente humedecido con:<br>
+- Agua destilada o<br>
+- Solución especial para pantallas.<br>
+❌ Nunca uses alcohol puro, amoníaco ni papel toalla.<br>
+💡 Apaga el equipo antes de limpiar y evita aplicar líquido directamente.`
+},
+
+{
+  patterns: [/c[aá]mara.*no funciona/i, /problema.*c[aá]mara/i],
+  response: `📷 <strong>¿Tu cámara no responde?</strong><br>
+✅ Soluciones:<br>
+- Verifica que ninguna app la esté usando en segundo plano.<br>
+- Prueba con otra app de cámara.<br>
+- En el navegador, otorga permisos de cámara.<br>
+🧰 En computadoras, actualiza el controlador de cámara desde el administrador de dispositivos.<br>
+⚠️ Si es física, asegúrate de que no tenga cubierta o que el hardware no esté deshabilitado.`
+},
+
+{
+  patterns: [/optimizar/i, /mejorar rendimiento/i],
+  response: `⚙️ <strong>Consejos para optimizar tu equipo:</strong><br>
+✅ Desinstala apps que no uses.<br>
+✅ Desactiva programas que inician con el sistema.<br>
+✅ Limpia archivos basura con herramientas como CCleaner.<br>
+✅ Usa un disco SSD si es posible.<br>
+✅ Reinicia al menos una vez por semana.<br>
+✅ Mantén drivers y sistema actualizados.`
 },
 
 
@@ -454,7 +938,7 @@ Escríbeme tu pregunta para comenzar.`
                     "anim": {
                         "enable": true,
                         "speed": 0.8, /* Velocidad de cambio de opacidad */
-                        "opacity_min": 1.0,
+                        "opacity_min": 0.1,
                         "sync": false
                     }
                 },
@@ -496,7 +980,29 @@ Escríbeme tu pregunta para comenzar.`
         });
     
 
+function toggleFAQ() {
+  const sidebar = document.querySelector(".faq-sidebar");
+  sidebar.classList.toggle("active");
+}
+
+const toggleSwitch = document.getElementById("themeToggleSwitch");
+
+toggleSwitch.addEventListener("change", () => {
+  document.body.classList.toggle("light-theme");
+  localStorage.setItem("asa-theme", document.body.classList.contains("light-theme") ? "light" : "dark");
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("asa-theme");
+  if (savedTheme === "light") {
+    document.body.classList.add("light-theme");
+    toggleSwitch.checked = true;
+  }
+});
+
+
 
   </script>
+  <button class="faq-toggle" onclick="toggleFAQ()">❓ FAQ</button>
 </body>
 </html>
